@@ -13,8 +13,8 @@ devices = device_lib.list_local_devices()
 flags = tf.app.flags
 flags.DEFINE_integer("seed",111, "Random seed (Def: 111).")
 flags.DEFINE_integer("epoch", 150, "Epochs to train (Def: 150).")
-flags.DEFINE_integer("batch_size", 150, "Batch size (Def: 150).")
-flags.DEFINE_integer("save_freq", 50, "Batch save freq (Def: 50).")
+flags.DEFINE_integer("batch_size", 32, "Batch size (Def: 150).")
+flags.DEFINE_integer("save_freq", 500, "Batch save freq (Def: 50).")
 flags.DEFINE_integer("canvas_size", 2**14, "Canvas size (Def: 2^14).")
 flags.DEFINE_integer("denoise_epoch", 5, "Epoch where noise in disc is "
                                           "removed (Def: 5).")
@@ -82,6 +82,7 @@ def main(_):
             continue
         print('Using device: ', device.name)
         udevices.append(device.name)
+    udevices = [udevices[0] , udevices[-1]] # DO NOT USE XLA devices
     # execute the session
     with tf.Session(config=config) as sess:
         if FLAGS.model == 'gan':

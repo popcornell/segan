@@ -89,12 +89,12 @@ def main(opts):
         beg_enc_t = timeit.default_timer()
         out_file = tf.python_io.TFRecordWriter(out_filepath)
         # process the acoustic and textual data now
-        for dset_i, (dset, dset_desc) in enumerate(cfg_desc.iteritems()):
+        for dset_i, (dset, dset_desc) in cfg_desc.items():
             print('-' * 50)
-            wav_dir = dset_desc['clean']
+            wav_dir = cfg_desc[dset_i][dset]
             wav_files = [os.path.join(wav_dir, wav) for wav in
                            os.listdir(wav_dir) if wav.endswith('.wav')]
-            noisy_dir = dset_desc['noisy']
+            noisy_dir =  cfg_desc[dset_i][dset_desc]
             nfiles = len(wav_files)
             for m, wav_file in enumerate(wav_files):
                 print('Processing wav file {}/{} {}{}'.format(m + 1,
